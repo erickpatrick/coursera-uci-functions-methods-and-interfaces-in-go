@@ -8,12 +8,22 @@ import (
 	"strings"
 )
 
-func Swap(slice int, index int) {
-
+func Swap(slice []int, index int) {
+	if slice[index] > slice[index+1] {
+		slice[index], slice[index+1] = slice[index+1], slice[index]
+	}
 }
 
 func BubbleSort(slice []int) {
-	fmt.Println(slice)
+	sliceLength := len(slice)
+	for range slice[:sliceLength] {
+		for inner := range slice[:sliceLength-1] {
+			Swap(slice, inner)
+		}
+	}
+	for _, number := range slice {
+		fmt.Print(number, " ")
+	}
 }
 
 func GetUserInput() []int {
@@ -27,7 +37,7 @@ restart:
 	for _, value := range explodedInput {
 		val, err := strconv.Atoi(value)
 		if err != nil {
-			fmt.Println(err)
+			goto restart
 		}
 		numbers = append(numbers, val)
 	}
